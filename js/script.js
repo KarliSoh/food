@@ -256,9 +256,6 @@ window.addEventListener('DOMContentLoaded', () => {
             `;
             form.insertAdjacentElement('afterend', statusMessage);
 
-
-
-
             const formData = new FormData(form);
 
             // делаем с пом json
@@ -266,7 +263,6 @@ window.addEventListener('DOMContentLoaded', () => {
             formData.forEach(function (value, key) {
                 object[key] = value;
             });
-
 
             fetch('server.php', {
                 method: "POST",
@@ -285,6 +281,7 @@ window.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
 
     function showThanksModal(message) {
         const prevModalDialog = document.querySelector('.modal__dialog');
@@ -308,4 +305,8 @@ window.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }, 4000);
     }
+
+    fetch('http://localhost:3000/menu')
+        .then(data => data.json())
+        .then(res => console.log(res));
 });
