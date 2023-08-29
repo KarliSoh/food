@@ -46,20 +46,11 @@ window.addEventListener('DOMContentLoaded', () => {
     const deadline = '2023-09-20';
 
     function getTimeRemaining(endtime) {
-        let days, hours, minutes, seconds;
-        const t = Date.parse(endtime) - Date.parse(new Date());
-
-        if (t <= 0) {
-            days = 0;
-            hours = 0;
-            minutes = 0;
-            seconds = 0;
-        } else {
+        const t = Date.parse(endtime) - Date.parse(new Date()),
             days = Math.floor((t / (1000 * 60 * 60 * 24))),
-                hours = Math.floor((t / (1000 * 60 * 60) % 24)),
-                minutes = Math.floor((t / 1000 / 60) % 60),
-                seconds = Math.floor((t / 1000) % 60);
-        }
+            hours = Math.floor((t / (1000 * 60 * 60) % 24)),
+            minutes = Math.floor((t / 1000 / 60) % 60),
+            seconds = Math.floor((t / 1000) % 60);
 
         return {
             'total': t,
@@ -111,13 +102,16 @@ window.addEventListener('DOMContentLoaded', () => {
         modal = document.querySelector('.modal'),
         modalCloseBtn = document.querySelector('[data-close');
 
+
+    function openModal() {
+        modal.classList.add('show');
+        modal.classList.remove('hide');
+        document.body.style.overflow = 'hidden';
+        clearInterval(modalTimerId);
+    }
+
     modalTrigger.forEach(btn => {
-        btn.addEventListener('click', () => {
-            modal.classList.add('show');
-            modal.classList.remove('hide');
-            // modal.classList.toggle('show'); 
-            document.body.style.overflow = 'hidden';
-        });
+        btn.addEventListener('click', openModal);
     });
 
     function closeModal() {
@@ -125,6 +119,7 @@ window.addEventListener('DOMContentLoaded', () => {
         modal.classList.remove('show');
         document.body.style.overflow = '';
     }
+
     modalCloseBtn.addEventListener('click', closeModal);
 
     modal.addEventListener('click', (e) => {
@@ -138,4 +133,15 @@ window.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }
     });
+
+    const modalTimerId = setTimeout(openModal, 3000);
+
+    function showModalByScroll() {
+        if (window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+            openModal();
+            window.removeEventListener('scroll', showModalByScroll);
+        }
+    }
+
+    window.addEventListener('scroll', showModalByScroll);
 });
