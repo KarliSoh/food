@@ -1,12 +1,11 @@
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', function () {
 
-    //Tabs
+    // Tabs
 
     let tabs = document.querySelectorAll('.tabheader__item'),
         tabsContent = document.querySelectorAll('.tabcontent'),
         tabsParent = document.querySelector('.tabheader__items');
 
-    // Скрываем табы
     function hideTabContent() {
 
         tabsContent.forEach(item => {
@@ -19,7 +18,6 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Показываем табы
     function showTabContent(i = 0) {
         tabsContent[i].classList.add('show', 'fade');
         tabsContent[i].classList.remove('hide');
@@ -43,14 +41,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Timer
 
-    const deadline = '2023-09-20';
+    const deadline = '2022-06-11';
 
     function getTimeRemaining(endtime) {
         const t = Date.parse(endtime) - Date.parse(new Date()),
             days = Math.floor((t / (1000 * 60 * 60 * 24))),
-            hours = Math.floor((t / (1000 * 60 * 60) % 24)),
+            seconds = Math.floor((t / 1000) % 60),
             minutes = Math.floor((t / 1000 / 60) % 60),
-            seconds = Math.floor((t / 1000) % 60);
+            hours = Math.floor((t / (1000 * 60 * 60) % 24));
 
         return {
             'total': t,
@@ -63,7 +61,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     function getZero(num) {
         if (num >= 0 && num < 10) {
-            return `0${num}`;
+            return '0' + num;
         } else {
             return num;
         }
@@ -100,15 +98,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const modalTrigger = document.querySelectorAll('[data-modal]'),
         modal = document.querySelector('.modal'),
-        modalCloseBtn = document.querySelector('[data-close');
-
-
-    function openModal() {
-        modal.classList.add('show');
-        modal.classList.remove('hide');
-        document.body.style.overflow = 'hidden';
-        clearInterval(modalTimerId);
-    }
+        modalCloseBtn = document.querySelector('[data-close]');
 
     modalTrigger.forEach(btn => {
         btn.addEventListener('click', openModal);
@@ -118,6 +108,13 @@ window.addEventListener('DOMContentLoaded', () => {
         modal.classList.add('hide');
         modal.classList.remove('show');
         document.body.style.overflow = '';
+    }
+
+    function openModal() {
+        modal.classList.add('show');
+        modal.classList.remove('hide');
+        document.body.style.overflow = 'hidden';
+        clearInterval(modalTimerId);
     }
 
     modalCloseBtn.addEventListener('click', closeModal);
@@ -135,14 +132,14 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // const modalTimerId = setTimeout(openModal, 3000);
+    // Закомментировал, чтобы не отвлекало
 
     function showModalByScroll() {
-        if (window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) {
+        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
             openModal();
             window.removeEventListener('scroll', showModalByScroll);
         }
     }
-
     window.addEventListener('scroll', showModalByScroll);
 
     // Используем классы для создание карточек меню
@@ -162,7 +159,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         changeToUAH() {
             this.price = this.price * this.transfer;
-        } // конрв валюту
+        }
 
         render() {
             const element = document.createElement('div');
@@ -175,18 +172,19 @@ window.addEventListener('DOMContentLoaded', () => {
             }
 
             element.innerHTML = `
-                    <img src=${this.src} alt=${this.alt}>
-                    <h3 class="menu__item-subtitle">${this.title}</h3>
-                    <div class="menu__item-descr">${this.descr}</div>
-                    <div class="menu__item-divider"></div>
-                    <div class="menu__item-price">
-                        <div class="menu__item-cost">Цена:</div>
-                        <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
-                    </div>
-                `;
+                <img src=${this.src} alt=${this.alt}>
+                <h3 class="menu__item-subtitle">${this.title}</h3>
+                <div class="menu__item-descr">${this.descr}</div>
+                <div class="menu__item-divider"></div>
+                <div class="menu__item-price">
+                    <div class="menu__item-cost">Цена:</div>
+                    <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
+                </div>
+            `;
             this.parent.append(element);
         }
     }
+
     new MenuCard(
         "img/tabs/vegy.jpg",
         "vegy",
