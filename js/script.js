@@ -129,7 +129,7 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // const modalTimerId = setTimeout(openModal, 3000);
+    const modalTimerId = setTimeout(openModal, 50000);
     // Закомментировал, чтобы не отвлекало
 
     function showModalByScroll() {
@@ -227,10 +227,13 @@ window.addEventListener('DOMContentLoaded', function () {
     function postData(form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            const statusMessage = document.createElement('div');
-            statusMessage.classList.add('status');
-            statusMessage.textContent = message.loading;
-            form.append(statusMessage);
+            const statusMessage = document.createElement('img');
+            statusMessage.src = message.loading;
+            statusMessage.style.cssText = `
+                display: block;
+                margin: 0 auto;
+            `;
+            form.insertAdjacentElement('afterend', statusMessage);
 
             const request = new XMLHttpRequest();
             request.open('POST', 'server.php');
@@ -250,13 +253,11 @@ window.addEventListener('DOMContentLoaded', function () {
             request.addEventListener('load', () => {
                 if (request.status === 200) {
                     console.log(request.response);
-                    statusMessage.textContent = message.success;
+                    showThanksModal(message.success);
                     form.reset();
-                    setTimeout(() => {
-                        statusMessage.remove();
-                    }, 2000);
+                    statusMessage.remove();
                 } else {
-                    statusMessage.textContent = message.failure;
+                    showThanksModal(message.failure);
                 }
             });
         });
@@ -276,5 +277,13 @@ window.addEventListener('DOMContentLoaded', function () {
                 <div class="modal__title">${message}</div>
             </div>
         `;
+
+        document.querySelector('.modal').append(thanksModal);
+        setTimeout(() => {
+            thanksModal.remove();
+            prevModalDialog.classList.add('show');
+            prevModalDialog.classList.remove('hide');
+            closeModal();
+        }, 4000);
     }
 });
