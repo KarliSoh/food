@@ -272,6 +272,7 @@ window.addEventListener('DOMContentLoaded', function () {
         prevModalDialog.classList.add('hide');
         openModal();
 
+        // доб мод окно
         const thanksModal = document.createElement('div');
         thanksModal.classList.add('modal__dialog');
         thanksModal.innerHTML = `
@@ -288,5 +289,7 @@ window.addEventListener('DOMContentLoaded', function () {
             prevModalDialog.classList.remove('hide');
             closeModal();
         }, 4000);
+
+
     }
 });
