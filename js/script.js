@@ -210,6 +210,7 @@ window.addEventListener('DOMContentLoaded', function () {
         });
 
 
+
     // Forms
 
     const forms = document.querySelectorAll('form');
@@ -225,7 +226,7 @@ window.addEventListener('DOMContentLoaded', function () {
     });
 
     const postData = async (url, data) => {
-        let res = await fetch(url, {
+        const res = await fetch(url, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -236,10 +237,11 @@ window.addEventListener('DOMContentLoaded', function () {
         return await res.json();
     };
 
+
     function bindPostData(form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            const statusMessage = document.createElement('img');
+            let statusMessage = document.createElement('img');
             statusMessage.src = message.loading;
             statusMessage.style.cssText = `
                 display: block;
