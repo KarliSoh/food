@@ -442,6 +442,7 @@ window.addEventListener('DOMContentLoaded', function () {
         dots[slideIndex - 1].style.opacity = 1;
     });
 
+
     dots.forEach(dot => {
         dot.addEventListener('click', (e) => {
             const slideTo = e.target.getAttribute('data-slide-to');
