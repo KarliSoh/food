@@ -583,4 +583,6 @@ window.addEventListener('DOMContentLoaded', function () {
     getDynamicInformation('#weight');
     getDynamicInformation('#age');
 
+    //
+
 });
