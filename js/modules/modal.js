@@ -13,6 +13,8 @@ function openModal(modalSelector, modalTimerId) {
     modal.classList.remove('hide');
     document.body.style.overflow = 'hidden';
 
+    console.log(modal);
+
     if (modalTimerId) {
         clearInterval(modalTimerId);
     }
@@ -41,7 +43,6 @@ function modal(triggerSelector, modalSelector, modalTimerId) {
         }
     });
 
-    // Закомментировал, чтобы не отвлекало
 
     function showModalByScroll() {
         if (window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {

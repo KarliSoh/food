@@ -2,11 +2,16 @@ import {
     closeModal,
     openModal
 } from "./modal";
+import {
+    postData
+} from "../services/services";
 
-function forms(modalTimerId) {
+
+
+function forms(formSelector, modalTimerId) {
     // Forms
 
-    const forms = document.querySelectorAll('form');
+    const forms = document.querySelectorAll(formSelector);
 
     const message = {
         loading: 'img/form/spinner.svg',
@@ -18,27 +23,15 @@ function forms(modalTimerId) {
         bindPostData(item);
     });
 
-    const postData = async (url, data) => {
-        const res = await fetch(url, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: data,
-        });
+    // async function getResource(url) {
+    //     let res = await fetch(url);
 
-        return await res.json();
-    };
+    //     if (!res.ok) {
+    //         throw new Error(`Could not fetch ${url}, status: ${res.status}`);
+    //     }
 
-    async function getResource(url) {
-        let res = await fetch(url);
-
-        if (!res.ok) {
-            throw new Error(`Could not fetch ${url}, status: ${res.status}`);
-        }
-
-        return await res.json();
-    }
+    //     return await res.json();
+    // }
 
 
     function bindPostData(form) {
