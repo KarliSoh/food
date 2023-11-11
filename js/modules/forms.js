@@ -37,6 +37,7 @@ function forms(formSelector, modalTimerId) {
     function bindPostData(form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
+
             let statusMessage = document.createElement('img');
             statusMessage.src = message.loading;
             statusMessage.style.cssText = `
